@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}WikiWoof{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'wiki/styles/style.css' %}">
+        {% block script %}
+        {% endblock %}
+    </head>
+    <body>
+        <header class="layout_main-header">
+            <h1 class="layout_head-title">WikiWoof</h1>
+            <nav class="layout_head-nav" id="layout_head-nav">
+                <ul class="layout_link-list">
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'new_article' %}">New Article</a></li>
+                        <li><a href="{% url 'profile' id=user.id %}">My Profile</a></li>
+                        <li><a href="{% url 'following' %}">Following</a></li>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                        <li><a href="{% url 'register' %}">Register</a></li>
+                    {%endif %}     
+                </ul>
+            </nav>
+        </header>
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>

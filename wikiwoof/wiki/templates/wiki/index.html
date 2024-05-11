@@ -1,0 +1,10 @@
+{% extends "wiki/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <ul id="index_article-grid" class="index_article-grid"></ul>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'wiki/scripts/index.js' %}"></script>
+{% endblock %}

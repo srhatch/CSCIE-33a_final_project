@@ -1,0 +1,29 @@
+{% extends "wiki/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <form action="{% url 'save_article' %}" method="post" class="new-article_form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="new-article_title-container">
+            <label class="new-article_title-label" for="title">Article Title</label>
+            <input id="title" name="title">
+        </div>
+        <div class="new-article_thumbnail-container">
+            <label class="new-article_thumbnail-label" for="thumbnail-id">Choose a thumbnail picture</label>
+            <input id="thumbnail-id" class="thumbnail-input" type="file" name="thumbnail">
+        </div>
+        <div class="new-article_steps-container">
+            <button class="new-article_add-step">Add A Step</button>
+            <button class="new-article_remove-step">Remove Step</button>
+        </div>
+        <div class="new-article_materials-container">
+            <button class="new-article_add-material">Add Material</button>
+            <button class="new-article_remove-material">Remove Material</button>
+        </div>
+        <input type="submit" id="publish" value="Publish Article" name="publish">
+    </form>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'wiki/scripts/new-article.js' %}"></script>
+{% endblock %}

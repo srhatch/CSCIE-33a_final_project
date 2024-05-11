@@ -1,0 +1,57 @@
+{% extends "wiki/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <div class="article_info-container">
+        {% if article.id not in user_articles %}
+            <div class="article_postedby-container">Posted by: <a class="article_postedby-link" href="{% url 'profile' id=article.poster.id %}">{{article.poster}}</a></div>
+        {% else %}
+            <form action="{% url 'delete_article' id=article.id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" name="delete-button" value="Delete Article" id="delete-button">
+            </form>
+        {% endif %}
+        <div class="article_time-div">{{timestamp}}</div>
+    </div>
+    <div class="article_likes-container">
+        {% if article.id not in user_articles %}
+            {% if user.is_authenticated %}
+                <button id="like-button"></button>
+            {% endif %}
+            <div id="likes-div"></div>
+        {% endif %}
+    </div>
+    <div id="title-div" class="article_title-div">{{article.title|title}}</div>
+    <main class="article_main-container">
+        <div class="article_materials-container">
+            <div id="materials-title">Materials needed:</div>
+            {% for material in materials %}
+                <div id="materials" class="article_material-item">{{material}}</div>
+            {% endfor %}
+        </div>
+
+        <div class="article_step-container">
+            {% for step in step_list %}
+            <div id="step">{{step.0}}</div>
+            <div>{{step.1}}</div>
+            <img src="{{step.2.images.url}}" width="300">
+            {% endfor %}
+        </div>
+        <div class="article_comment-container">
+            {% if user.is_authenticated %}
+                {% if article.id not in user_articles %}
+                    <form class="article_comment-form" action="{% url 'post_comment' id=article.id %}" method="post">
+                        {% csrf_token %}
+                        <label class="article_comment-label" for="comment-text">Leave a comment</label>
+                        <textarea id="comment-text" name="comment"></textarea>
+                        <input type="submit" class="article_comment-submit-button" id="submit-button" name="submit">
+                    </form>
+                {% endif %}
+            {% endif %}
+            <div id="article_comment-div"></div>
+        </div>
+    </main>
+{% endblock %}
+{% block script %}
+    <script src="{% static 'wiki/scripts/article.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "wiki/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <main class="profile_main-container">
+        <h2 id="username">{{profile|title}}</h2>
+        {% if profile.id != request.user.id and user.is_authenticated %}
+            <button id="follow-button">Follow</button>
+        {% endif %}  
+        <div id="profile-info">
+            <div>{{num_articles}} Articles Published</div>
+            <div>Liked articles: {{liked}}</div>
+            <div id="profile_followers"></div>
+            <div id="following">Following: {{following}}</div>    
+        </div>
+        <div id="article-div">
+            <h3 class="profile_article-heading">Articles</h3>
+        </div>
+    </main>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'wiki/scripts/profile.js' %}"></script>
+{% endblock %}

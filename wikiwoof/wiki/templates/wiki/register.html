@@ -1,0 +1,10 @@
+{% extends "wiki/layout.html" %}
+
+{% block body %}
+<form action="{% url 'register' %}" method="post" class="register_form">
+    {% csrf_token %}
+    {{register_form}}
+    <input type="submit" name="new_account" value="Register" class="register_submit-button">
+</form>
+    <div class="register_login-redirect">Already have an account? <a href="{% url 'login' %}">Login</a></div>
+{% endblock %}
